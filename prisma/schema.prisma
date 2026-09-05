@@ -1,4 +1,189 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String           @id @default(cuid())
+  name         String
+  email        String           @unique
+  phone        String?          @unique
+  passwordHash String?
+  role         String           @default("VIEWER")
+  isActive     Boolean          @default(true)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  memberships Membership[]
+  priceQuotes PriceQuote[]
+  listings    Listing[]
+  referrals   HealthReferral[] @relation("ReferralAgent")
+  messageLogs MessageLog[]
+  auditLogs   AuditLog[]
+}
+
+model Community {
+  id        String       @id @default(cuid())
+  name      String
+  slug      String       @unique
+  region    String?
+  isActive  Boolean      @default(true)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  memberships   Membership[]
+  priceQuotes   PriceQuote[]
+  listings      Listing[]
+  facilities    HealthFacility[]
+}
+
+model Membership {
+  id            String   @id @default(cuid())
+  userId        String
+  communityId   String
+  communityRole String   @default("MEMBER")
+  createdAt     DateTime @default(now())
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  community Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, communityId])
+  @@index([communityId])
+}
+
+model ProductCategory {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  products Product[]
+}
+
+model Product {
+  id        String   @id @default(cuid())
+  name      String
+  unit      String
+  categoryId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  category    ProductCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  priceQuotes PriceQuote[]
+  listings    Listing[]
+
+  @@unique([name, unit])
+  @@index([categoryId])
+}
+
+model PriceQuote {
+  id             String   @id @default(cuid())
+  productId      String
+  communityId    String
+  price          Float
+  currency       String   @default("LOCAL")
+  source         String?
+  reportedById   String?
+  createdAt      DateTime @default(now())
+
+  product     Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  community   Community  @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  reportedBy  User?      @relation(fields: [reportedById], references: [id], onDelete: SetNull)
+
+  @@index([productId, communityId])
+  @@index([createdAt])
+}
+
+model HealthFacility {
+  id          String   @id @default(cuid())
+  name        String
+  type        String
+  phone       String?
+  address     String?
+  communityId String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  community Community        @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  referrals HealthReferral[]
+
+  @@index([communityId])
+}
+
+model HealthReferral {
+  id          String   @id @default(cuid())
+  facilityId  String
+  agentId     String?
+  personName  String
+  personPhone String?
+  reason      String
+  status      String   @default("OPEN")
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  facility HealthFacility @relation(fields: [facilityId], references: [id], onDelete: Cascade)
+  agent    User?          @relation("ReferralAgent", fields: [agentId], references: [id], onDelete: SetNull)
+
+  @@index([facilityId])
+  @@index([agentId])
+  @@index([status])
+}
+
+model Listing {
+  id           String   @id @default(cuid())
+  type         String
+  productId    String
+  communityId  String
+  createdById  String?
+  quantity     Float
+  price        Float
+  currency     String   @default("LOCAL")
+  status       String   @default("OPEN")
+  description  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  product   Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  community Community  @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  createdBy User?      @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([communityId])
+  @@index([status])
+  @@index([type])
+}
+
+model MessageLog {
+  id        String   @id @default(cuid())
+  channel   String
+  direction String
+  content   String
+  userId    String?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  action    String
+  entity    String
+  entityId  String?
+  metadata  String?
+  createdAt DateTime @default(now())
+
+  actor User? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([actorId])
+  @@index([entity])
+  @@index([createdAt])
 }
