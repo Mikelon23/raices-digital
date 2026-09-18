@@ -55,3 +55,11 @@ export function canCreateKnowledgeContent(role: Role): boolean {
 export function canViewAuditLogs(role: Role): boolean {
   return role === Roles.ADMIN;
 }
+
+export function canManageCatalog(role: Role): boolean {
+  return [
+    Roles.ADMIN,
+    Roles.COMMUNITY_AGENT,
+    Roles.MENTOR,
+  ].includes(role);
+}
