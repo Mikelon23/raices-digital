@@ -63,3 +63,18 @@ export function canManageCatalog(role: Role): boolean {
     Roles.MENTOR,
   ].includes(role);
 }
+
+export function canViewReferrals(role: Role): boolean {
+  return [
+    Roles.ADMIN,
+    Roles.COMMUNITY_AGENT,
+    Roles.HEALTH_AGENT,
+  ].includes(role);
+}
+
+export function canUpdateReferralStatus(role: Role): boolean {
+  return [
+    Roles.ADMIN,
+    Roles.HEALTH_AGENT,
+  ].includes(role);
+}
