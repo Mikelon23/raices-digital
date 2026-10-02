@@ -3,23 +3,27 @@ import { Roles } from "@/config/roles";
 
 export default function DashboardNav({ role }: { role: string }) {
   const links = [
-    {
-      href: "/dashboard",
-      label: "Resumen",
-    },
-    {
-      href: "/dashboard/communities",
-      label: "Comunidades",
-    },
-    {
-      href: "/dashboard/products",
-      label: "Productos",
-    },
-    {
-      href: "/dashboard/prices",
-      label: "Precios",
-    },
-  ];
+  {
+    href: "/dashboard",
+    label: "Resumen",
+  },
+  {
+    href: "/dashboard/communities",
+    label: "Comunidades",
+  },
+  {
+    href: "/dashboard/products",
+    label: "Productos",
+  },
+  {
+    href: "/dashboard/prices",
+    label: "Precios",
+  },
+  {
+    href: "/dashboard/health",
+    label: "Salud",
+  },
+];
 
   if (role === Roles.ADMIN) {
     links.push({
