@@ -303,3 +303,29 @@ export default async function MarketPage({
           )}
         </div>
       ) : null}
+
+      <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+        <h3 className="text-lg font-semibold text-white">
+          Publicaciones registradas
+        </h3>
+
+        {allListings.length === 0 ? (
+          <p className="mt-4 text-sm text-slate-400">
+            Aún no hay publicaciones registradas.
+          </p>
+        ) : (
+          <div className="mt-6 overflow-x-auto">
+            <table className="w-full min-w-[1100px] border-separate border-spacing-y-2">
+              <thead>
+                <tr className="text-left text-xs uppercase tracking-wide text-slate-500">
+                  <th className="px-4 py-2">Fecha</th>
+                  <th className="px-4 py-2">Tipo</th>
+                  <th className="px-4 py-2">Producto</th>
+                  <th className="px-4 py-2">Comunidad</th>
+                  <th className="px-4 py-2">Cantidad</th>
+                  <th className="px-4 py-2">Precio</th>
+                  <th className="px-4 py-2">Estado</th>
+                  <th className="px-4 py-2">Creado por</th>
+                  <th className="px-4 py-2">Acciones</th>
+                </tr>
+              </thead>
