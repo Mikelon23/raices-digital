@@ -254,3 +254,52 @@ export default async function MarketPage({
                 />
               </div>
 
+              <div>
+                <label
+                  htmlFor="listing-currency"
+                  className="mb-2 block text-sm font-medium text-slate-300"
+                >
+                  Moneda
+                </label>
+
+                <select
+                  id="listing-currency"
+                  name="currency"
+                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400"
+                >
+                  <option value="LOCAL">LOCAL</option>
+                  <option value="MXN">MXN</option>
+                  <option value="COP">COP</option>
+                  <option value="USD">USD</option>
+                </select>
+              </div>
+
+              <div className="md:col-span-2">
+                <label
+                  htmlFor="listing-description"
+                  className="mb-2 block text-sm font-medium text-slate-300"
+                >
+                  Descripción (opcional)
+                </label>
+
+                <textarea
+                  id="listing-description"
+                  name="description"
+                  rows={3}
+                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400"
+                  placeholder="Información adicional sobre la publicación..."
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <button
+                  type="submit"
+                  className="rounded-xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400"
+                >
+                  Crear publicación
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      ) : null}
