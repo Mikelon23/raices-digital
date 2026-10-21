@@ -329,3 +329,31 @@ export default async function MarketPage({
                   <th className="px-4 py-2">Acciones</th>
                 </tr>
               </thead>
+
+              <tbody>
+                {allListings.map((listing) => {
+                  const canUpdate =
+                    listing.createdById === session.id ||
+                    session.role === "ADMIN";
+
+                  return (
+                    <tr
+                      key={listing.id}
+                      className="rounded-2xl bg-slate-950/60 text-sm text-slate-300"
+                    >
+                      <td className="px-4 py-3">
+                        {formatDateTime(listing.createdAt)}
+                      </td>
+
+                      <td className="px-4 py-3">
+                        <span
+                          className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${
+                            listing.type === "SELL"
+                              ? "bg-emerald-500/20 text-emerald-300"
+                              : "bg-blue-500/20 text-blue-300"
+                          }`}
+                        >
+                          {listing.type === "SELL" ? "Venta" : "Compra"}
+                        </span>
+                      </td>
+
