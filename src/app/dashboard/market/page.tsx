@@ -357,3 +357,44 @@ export default async function MarketPage({
                         </span>
                       </td>
 
+                      <td className="px-4 py-3">
+                        <div>
+                          <p className="font-medium text-white">
+                            {listing.product.name}
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            {listing.product.unit}
+                          </p>
+                        </div>
+                      </td>
+
+                      <td className="px-4 py-3">
+                        {listing.community.name}
+                      </td>
+
+                      <td className="px-4 py-3">
+                        {listing.quantity} {listing.product.unit}
+                      </td>
+
+                      <td className="px-4 py-3 font-semibold text-emerald-300">
+                        {formatMoney(listing.price, listing.currency)}
+                      </td>
+
+                      <td className="px-4 py-3">
+                        <span
+                          className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${
+                            listing.status === "OPEN"
+                              ? "bg-emerald-500/20 text-emerald-300"
+                              : listing.status === "CLOSED"
+                              ? "bg-slate-500/20 text-slate-300"
+                              : "bg-red-500/20 text-red-300"
+                          }`}
+                        >
+                          {listing.status === "OPEN"
+                            ? "Abierta"
+                            : listing.status === "CLOSED"
+                            ? "Cerrada"
+                            : "Cancelada"}
+                        </span>
+                      </td>
+
