@@ -23,6 +23,10 @@ export default function DashboardNav({ role }: { role: string }) {
     href: "/dashboard/health",
     label: "Salud",
   },
+  {
+    href: "/dashboard/market",
+    label: "Mercado",
+  },
 ];
 
   if (role === Roles.ADMIN) {
