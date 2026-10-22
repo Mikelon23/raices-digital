@@ -83,7 +83,7 @@ export default async function DashboardHomePage() {
 
       <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
         <h3 className="text-lg font-semibold text-white">
-          Módulos activos en Fase 3B
+          Módulos activos en Fase 3C
         </h3>
 
         <ul className="mt-4 space-y-2 text-sm text-slate-400">
@@ -92,6 +92,7 @@ export default async function DashboardHomePage() {
           <li>- Registro y consulta de precios agrícolas.</li>
           <li>- Directorio de centros de salud comunitaria.</li>
           <li>- Registro y gestión de referencias básicas de salud.</li>
+          <li>- Publicaciones de mercado local (compra y venta).</li>
         </ul>
       </div>
     </div>
