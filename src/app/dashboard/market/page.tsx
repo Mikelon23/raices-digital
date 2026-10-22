@@ -398,3 +398,49 @@ export default async function MarketPage({
                         </span>
                       </td>
 
+                      <td className="px-4 py-3">
+                        {listing.createdBy?.name ?? "N/D"}
+                      </td>
+
+                      <td className="px-4 py-3">
+                        {canUpdate && listing.status === "OPEN" ? (
+                          <form
+                            action={updateListingStatus}
+                            className="flex gap-2"
+                          >
+                            <input
+                              type="hidden"
+                              name="listingId"
+                              value={listing.id}
+                            />
+
+                            <select
+                              name="status"
+                              className="rounded-lg border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-white"
+                            >
+                              <option value="CLOSED">Cerrar</option>
+                              <option value="CANCELLED">Cancelar</option>
+                            </select>
+
+                            <button
+                              type="submit"
+                              className="rounded-lg bg-emerald-500 px-3 py-1 text-xs font-semibold text-slate-950 hover:bg-emerald-400"
+                            >
+                              Actualizar
+                            </button>
+                          </form>
+                        ) : (
+                          <span className="text-xs text-slate-500">—</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
