@@ -19,3 +19,21 @@ export class Money {
     }
   }
 
+  static create(amount: number, currency: string): Money {
+    return new Money(amount, currency.toUpperCase());
+  }
+
+  add(other: Money): Money {
+    this.ensureSameCurrency(other);
+    return new Money(this.amount + other.amount, this.currency);
+  }
+
+  subtract(other: Money): Money {
+    this.ensureSameCurrency(other);
+    const result = this.amount - other.amount;
+    if (result < 0) {
+      throw new Error("Resulting amount cannot be negative");
+    }
+    return new Money(result, this.currency);
+  }
+
