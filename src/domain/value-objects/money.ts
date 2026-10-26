@@ -37,3 +37,19 @@ export class Money {
     return new Money(result, this.currency);
   }
 
+  equals(other: Money): boolean {
+    return this.amount === other.amount && this.currency === other.currency;
+  }
+
+  private ensureSameCurrency(other: Money): void {
+    if (this.currency !== other.currency) {
+      throw new Error(
+        `Cannot operate on different currencies: ${this.currency} vs ${other.currency}`
+      );
+    }
+  }
+
+  toString(): string {
+    return `${this.amount.toFixed(2)} ${this.currency}`;
+  }
+}
