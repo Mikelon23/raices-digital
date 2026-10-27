@@ -17,3 +17,16 @@ export class DateRange {
     return new DateRange(startDate, endDate);
   }
 
+  contains(date: Date): boolean {
+    return date >= this.startDate && date <= this.endDate;
+  }
+
+  overlaps(other: DateRange): boolean {
+    return this.startDate <= other.endDate && other.startDate <= this.endDate;
+  }
+
+  getDurationInDays(): number {
+    const diffTime = Math.abs(this.endDate.getTime() - this.startDate.getTime());
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  }
+}
